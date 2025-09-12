@@ -1,10 +1,9 @@
 'use client';
 import { useState } from 'react';
-import AuthForm from '../components/AuthForm';
-import Button from '../components/Button';
+import AuthForm from './components/AuthForm';
+import Button from './components/Button';
 
-// Main Landing Page Component
-export default function Home() {
+export default function LandingPage() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState('login'); // 'login' or 'signup'
 
