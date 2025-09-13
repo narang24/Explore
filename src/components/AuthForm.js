@@ -260,7 +260,7 @@ export default function AuthForm({ mode, onClose, onSwitchMode }) {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 py-3 mt-6"
+              className="w-full bg-gradient-to-r from-[var(--planetary)] to-[var(--sapphire)] text-white hover:from-[var(--sapphire)] hover:to-[var(--planetary)] py-3 mt-6"
             >
               {mode === 'login' ? 'Login' : 'Continue'}
             </Button>

@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { Calendar, Users, Sparkles } from 'lucide-react';
 import AuthForm from '../components/AuthForm';
 import Button from '../components/Button';
 
@@ -16,24 +17,23 @@ export default function Home() {
     <div className="min-h-screen bg-white text-[var(--galaxy)] flex flex-col">
       
       {/* Header (original content) */}
-      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-2 sm:px-3 py-4 pt-5">
+      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 py-4 pt-5">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-[var(--planetary)] text-white font-extrabold grid place-items-center">X</div>
           <span className="font-extrabold tracking-wide text-[var(--galaxy)]">PLORE</span>
         </div>
         <div className="flex items-center gap-3">
           <Button
-            variant="outline"
             radius="md"
             onClick={() => openModal('login')}
-            className="text-sm border-[var(--planetary)] text-[var(--planetary)] cursor-pointer hover:bg-[var(--planetary)] hover:text-white px-3 py-1.5"
+            className="text-xs border border-[var(--planetary)] text-[var(--planetary)] cursor-pointer hover:bg-[var(--planetary)] hover:text-white px-2.5 py-1 transition-colors duration-300 bg-transparent"
           >
             Login
           </Button>
           <Button
             onClick={() => openModal('signup')}
             radius="md"
-            className="text-sm bg-[var(--planetary)] cursor-pointer hover:bg-[var(--galaxy)] text-white px-3 py-1.5"
+            className="text-xs bg-[var(--planetary)] cursor-pointer hover:bg-[var(--galaxy)] text-white px-2.5 py-1"
           >
             Sign Up
           </Button>
@@ -41,7 +41,7 @@ export default function Home() {
       </header>
 
       {/* Hero (original content) */}
-      <main className="mx-auto max-w-7xl px-2 sm:px-3 lg:px-5 pt-24 md:pt-24 pb-24 text-center">
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 md:pt-24 pb-24 text-center">
         <h1 className="mx-auto max-w-3xl text-4xl md:text-5xl font-semibold text-[var(--galaxy)]">
           Your Campus, Unlocked.
         </h1>
@@ -54,20 +54,29 @@ export default function Home() {
             size="small"
             radius="md"
             onClick={() => openModal('login')}
-            className="bg-[var(--galaxy)] hover:bg-[var(--planetary)] text-white px-6 py-2 text-xs md:text-sm"
+            className="bg-gradient-to-r from-[var(--planetary)] to-[var(--sapphire)] hover:from-[var(--sapphire)] hover:to-[var(--planetary)] text-white px-8 py-3 text-sm cursor-pointer"
           >
-            LOGIN
+            Get Started
           </Button>
-        <div className="mt-4 flex items-center justify-center gap-2">
-          <span className="rounded-full bg-[var(--sky)] text-[var(--planetary)] px-3 py-1 text-xs">Events</span>
-          <span className="rounded-full bg-[var(--sky)] text-[var(--planetary)] px-3 py-1 text-xs">Clubs</span>
-          <span className="rounded-full bg-[var(--sky)] text-[var(--planetary)] px-3 py-1 text-xs">Opportunities</span>
+        <div className="mt-6 flex items-center justify-center gap-8">
+          <div className="flex items-center gap-2 text-[var(--galaxy)]">
+            <Calendar size={18} />
+            <span className="text-sm font-medium">Events</span>
+          </div>
+          <div className="flex items-center gap-2 text-[var(--galaxy)]">
+            <Users size={18} />
+            <span className="text-sm font-medium">Clubs</span>
+          </div>
+          <div className="flex items-center gap-2 text-[var(--galaxy)]">
+            <Sparkles size={18} />
+            <span className="text-sm font-medium">Opportunities</span>
+          </div>
         </div>
         </div>
       </main>
 
       {/* Why Xplore? (original 3 features) */}
-      <section className="mx-auto max-w-7xl px-2 sm:px-3 lg:px-5 pb-10" id="features">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-10" id="features">
         <h2 className="text-center text-2xl md:text-3xl font-semibold text-[var(--galaxy)]">Why Xplore?</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
@@ -89,7 +98,7 @@ export default function Home() {
       </section>
 
       {/* Success Stories (original) */}
-      <section className="mx-auto max-w-7xl px-2 sm:px-3 lg:px-5 pb-10">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-10">
         <h3 className="text-center text-2xl font-semibold text-[var(--galaxy)]">Campus Success Stories</h3>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {[1,2,3].map((i) => (
@@ -105,7 +114,7 @@ export default function Home() {
 
       {/* Footer (original content) */}
       <footer className="mt-auto bg-gradient-to-r from-[var(--galaxy)] to-[var(--planetary)] text-white">
-        <div className="mx-auto max-w-7xl px-2 sm:px-3 lg:px-5 py-8">
+        <div className="mx-auto max-w-6xl px-8 sm:px-10 lg:px-12 py-8">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div>
               <div className="flex items-center gap-2">
