@@ -13,26 +13,27 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 flex flex-col">
-      <div className="h-1.5 w-full bg-gradient-to-r from-indigo-600 via-blue-600 to-purple-700" />
-
+    <div className="min-h-screen bg-white text-[var(--galaxy)] flex flex-col">
+      
       {/* Header (original content) */}
-      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4">
+      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-2 sm:px-3 py-4 pt-5">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold grid place-items-center">X</div>
-          <span className="font-semibold tracking-wide">PLORE</span>
+          <div className="w-8 h-8 rounded-full bg-[var(--planetary)] text-white font-extrabold grid place-items-center">X</div>
+          <span className="font-extrabold tracking-wide text-[var(--galaxy)]">PLORE</span>
         </div>
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
+            radius="md"
             onClick={() => openModal('login')}
-            className="text-sm border-gray-300 text-gray-700 hover:bg-gray-100 px-4 py-2"
+            className="text-sm border-[var(--planetary)] text-[var(--planetary)] cursor-pointer hover:bg-[var(--planetary)] hover:text-white px-3 py-1.5"
           >
             Login
           </Button>
           <Button
             onClick={() => openModal('signup')}
-            className="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2"
+            radius="md"
+            className="text-sm bg-[var(--planetary)] cursor-pointer hover:bg-[var(--galaxy)] text-white px-3 py-1.5"
           >
             Sign Up
           </Button>
@@ -40,70 +41,76 @@ export default function Home() {
       </header>
 
       {/* Hero (original content) */}
-      <main className="px-6 pt-12 pb-16 text-center">
-        <h1 className="mx-auto max-w-3xl text-4xl md:text-5xl font-semibold text-gray-900">
+      <main className="mx-auto max-w-7xl px-2 sm:px-3 lg:px-5 pt-24 md:pt-24 pb-24 text-center">
+        <h1 className="mx-auto max-w-3xl text-4xl md:text-5xl font-semibold text-[var(--galaxy)]">
           Your Campus, Unlocked.
         </h1>
-        <p className="mt-3 mx-auto max-w-2xl text-sm md:text-base text-gray-600">
+        <p className="mt-3 mx-auto max-w-2xl text-sm md:text-base text-[var(--planetary)]">
           Discover, Connect, and Thrive with Xplore – Your Gateway to Campus Clubs, Events, and Opportunities.
         </p>
         <div className="mt-8">
           <Button
             variant="primary"
-            size="large"
+            size="small"
+            radius="md"
             onClick={() => openModal('login')}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-3 text-sm"
+            className="bg-[var(--galaxy)] hover:bg-[var(--planetary)] text-white px-6 py-2 text-xs md:text-sm"
           >
             LOGIN
           </Button>
+        <div className="mt-4 flex items-center justify-center gap-2">
+          <span className="rounded-full bg-[var(--sky)] text-[var(--planetary)] px-3 py-1 text-xs">Events</span>
+          <span className="rounded-full bg-[var(--sky)] text-[var(--planetary)] px-3 py-1 text-xs">Clubs</span>
+          <span className="rounded-full bg-[var(--sky)] text-[var(--planetary)] px-3 py-1 text-xs">Opportunities</span>
+        </div>
         </div>
       </main>
 
       {/* Why Xplore? (original 3 features) */}
-      <section className="px-6 pb-16" id="features">
-        <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900">Why Xplore?</h2>
+      <section className="mx-auto max-w-7xl px-2 sm:px-3 lg:px-5 pb-10" id="features">
+        <h2 className="text-center text-2xl md:text-3xl font-semibold text-[var(--galaxy)]">Why Xplore?</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-            <div className="w-12 h-12 rounded-xl bg-yellow-400 flex items-center justify-center mb-4 text-gray-900 text-xl">🎯</div>
-            <h3 className="text-base font-semibold text-gray-900">Discover Events</h3>
-            <p className="mt-2 text-gray-600 text-sm">Find and join exciting campus events, workshops, and activities that match your interests.</p>
+            <div className="w-12 h-12 rounded-xl bg-yellow-400 flex items-center justify-center mb-4 text-[var(--galaxy)] text-xl">🎯</div>
+            <h3 className="text-base font-semibold text-[var(--galaxy)]">Discover Events</h3>
+            <p className="mt-2 text-[var(--planetary)] text-sm">Find and join exciting campus events, workshops, and activities that match your interests.</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-            <div className="w-12 h-12 rounded-xl bg-yellow-400 flex items-center justify-center mb-4 text-gray-900 text-xl">🤝</div>
-            <h3 className="text-base font-semibold text-gray-900">Connect with Clubs</h3>
-            <p className="mt-2 text-gray-600 text-sm">Join clubs and societies that align with your passions and build lasting connections.</p>
+            <div className="w-12 h-12 rounded-xl bg-yellow-400 flex items-center justify-center mb-4 text-[var(--galaxy)] text-xl">🤝</div>
+            <h3 className="text-base font-semibold text-[var(--galaxy)]">Connect with Clubs</h3>
+            <p className="mt-2 text-[var(--planetary)] text-sm">Join clubs and societies that align with your passions and build lasting connections.</p>
           </div>
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-            <div className="w-12 h-12 rounded-xl bg-yellow-400 flex items-center justify-center mb-4 text-gray-900 text-xl">📊</div>
-            <h3 className="text-base font-semibold text-gray-900">Stay Organized</h3>
-            <p className="mt-2 text-gray-600 text-sm">Track your participation, manage your schedule, and never miss important opportunities.</p>
+            <div className="w-12 h-12 rounded-xl bg-yellow-400 flex items-center justify-center mb-4 text-[var(--galaxy)] text-xl">📊</div>
+            <h3 className="text-base font-semibold text-[var(--galaxy)]">Stay Organized</h3>
+            <p className="mt-2 text-[var(--planetary)] text-sm">Track your participation, manage your schedule, and never miss important opportunities.</p>
           </div>
         </div>
       </section>
 
       {/* Success Stories (original) */}
-      <section className="px-6 pb-16">
-        <h3 className="text-center text-2xl font-semibold text-gray-900">Campus Success Stories</h3>
+      <section className="mx-auto max-w-7xl px-2 sm:px-3 lg:px-5 pb-10">
+        <h3 className="text-center text-2xl font-semibold text-[var(--galaxy)]">Campus Success Stories</h3>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {[1,2,3].map((i) => (
             <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-              <div className="w-full h-32 rounded-xl bg-gradient-to-br from-indigo-400 to-blue-400 flex items-center justify-center text-white font-semibold">
+              <div className="w-full h-32 rounded-xl bg-gradient-to-br from-[var(--planetary)] to-[var(--universe)] flex items-center justify-center text-white font-semibold">
                 Success Story {i}
               </div>
-              <p className="mt-3 text-gray-600 text-sm">Discover how students are making the most of their campus experience with Xplore.</p>
+              <p className="mt-3 text-[var(--planetary)] text-sm">Discover how students are making the most of their campus experience with Xplore.</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Footer (original content) */}
-      <footer className="mt-auto bg-gradient-to-r from-indigo-700 to-purple-800 text-white">
-        <div className="mx-auto max-w-6xl px-6 py-12">
+      <footer className="mt-auto bg-gradient-to-r from-[var(--galaxy)] to-[var(--planetary)] text-white">
+        <div className="mx-auto max-w-7xl px-2 sm:px-3 lg:px-5 py-8">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div>
               <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-full bg-white text-indigo-700 font-bold grid place-items-center">X</div>
-                <span className="font-semibold">PLORE</span>
+                <div className="w-9 h-9 rounded-full bg-white text-[var(--planetary)] font-extrabold grid place-items-center">X</div>
+                <span className="font-extrabold">PLORE</span>
               </div>
               <div className="mt-6 grid grid-cols-2 gap-8">
                 <div>

@@ -1,12 +1,22 @@
-export default function Button({ 
-  children, 
-  variant = 'primary', 
-  size = 'medium', 
-  className = '', 
-  ...props 
+export default function Button({
+  children,
+  variant = 'primary',
+  size = 'medium',
+  radius = 'full',
+  className = '',
+  ...props
 }) {
-  const baseStyles = 'font-semibold rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2';
-  
+  const radii = {
+    none: 'rounded-none',
+    sm: 'rounded-sm',
+    md: 'rounded-md',
+    lg: 'rounded-lg',
+    xl: 'rounded-xl',
+    full: 'rounded-full',
+  };
+
+  const baseStyles = `font-semibold ${radii[radius] || radii.full} transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2`;
+
   const variants = {
     primary: 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 focus:ring-purple-500',
     outline: 'border-2 border-current bg-transparent hover:bg-current hover:bg-opacity-10',
