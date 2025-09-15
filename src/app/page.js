@@ -126,17 +126,17 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-10 mb-12" id="features">
         <h2 className="text-center text-2xl md:text-3xl font-semibold text-[var(--galaxy)]">Why Xplore?</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+          <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-200">
             <div className="w-12 h-12 rounded-xl bg-[var(--sky)] flex items-center justify-center mb-4 text-[var(--planetary)]"><CalendarDays size={22} /></div>
             <h3 className="text-base font-semibold text-[var(--galaxy)]">Discover Events</h3>
             <p className="mt-2 text-[var(--planetary)] text-sm">Find and join exciting campus events, workshops, and activities that match your interests.</p>
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+          <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-200">
             <div className="w-12 h-12 rounded-xl bg-[var(--sky)] flex items-center justify-center mb-4 text-[var(--planetary)]"><Users size={22} /></div>
             <h3 className="text-base font-semibold text-[var(--galaxy)]">Connect with Clubs</h3>
             <p className="mt-2 text-[var(--planetary)] text-sm">Join clubs and societies that align with your passions and build lasting connections.</p>
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+          <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-200">
             <div className="w-12 h-12 rounded-xl bg-[var(--sky)] flex items-center justify-center mb-4 text-[var(--planetary)]"><ClipboardList size={22} /></div>
             <h3 className="text-base font-semibold text-[var(--galaxy)]">Stay Organized</h3>
             <p className="mt-2 text-[var(--planetary)] text-sm">Track your participation, manage your schedule, and never miss important opportunities.</p>
