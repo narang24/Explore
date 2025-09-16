@@ -80,7 +80,7 @@ export default function Home() {
           <Button
             radius="md"
             onClick={() => setOpenModal(true)}
-            className="text-xs border border-[var(--planetary)] text-[var(--planetary)] cursor-pointer hover:bg-[var(--planetary)] hover:text-white px-2 py-2 min-w-20 transition-colors duration-300 bg-transparent"
+            className="text-xs border border-[var(--planetary)] text-[var(--planetary)] cursor-pointer hover:bg-[var(--planetary)] hover:text-white px-2 py-2 min-w-24 transition-colors duration-300 bg-transparent"
           >
             Login
           </Button>
@@ -88,37 +88,60 @@ export default function Home() {
       </header>
 
       {/* Hero (original content) */}
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 md:pt-24 pb-24 text-center">
-        <h1 className="mx-auto max-w-3xl text-4xl md:text-5xl font-semibold text-[var(--galaxy)]">
-          Your Campus, Unlocked.
-        </h1>
-        <p className="mt-3 mx-auto max-w-2xl text-sm md:text-base text-[var(--planetary)]">
-          Discover, Connect, and Thrive with Xplore – Your Gateway to Campus Clubs, Events, and Opportunities.
-        </p>
-        <div className="mt-8">
-          <Button
-            variant="primary"
-            size="small"
-            radius="md"
-            onClick={() => setOpenModal(true)}
-            className="bg-gradient-to-r from-[var(--planetary)] to-[var(--sapphire)] hover:from-[var(--sapphire)] hover:to-[var(--planetary)] text-white px-8 py-3 text-sm cursor-pointer"
-          >
-            Get Started
-          </Button>
-        <div className="mt-6 flex items-center justify-center gap-8">
-          <div className="flex items-center gap-2 text-[var(--galaxy)]">
-            <Calendar size={18} />
-            <span className="text-sm font-medium">Events</span>
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 md:pt-24 pb-28">
+        <div className="grid lg:grid-cols-2 gap-14 lg:gap-16 items-center">
+          {/* Left Content */}
+          <div className="text-center lg:text-left">
+            <h1 className="max-w-3xl text-4xl md:text-5xl font-semibold text-[var(--galaxy)]">
+              Your Campus, Unlocked.
+            </h1>
+            <p className="mt-3 max-w-2xl text-sm md:text-base text-[var(--planetary)]">
+              Discover, Connect, and Thrive with Xplore – Your Gateway to Campus Clubs, Events, and Opportunities.
+            </p>
+            <div className="mt-8">
+              <Button
+                variant="primary"
+                size="small"
+                radius="md"
+                onClick={() => setOpenModal(true)}
+                className="bg-gradient-to-r from-[var(--planetary)] to-[var(--sapphire)] hover:from-[var(--sapphire)] hover:to-[var(--planetary)] text-white px-8 py-3 text-sm cursor-pointer"
+              >
+                Get Started
+              </Button>
+            <div className="mt-6 flex items-center justify-center lg:justify-start gap-8">
+              <div className="flex items-center gap-2 text-[var(--galaxy)]">
+                <Calendar size={18} />
+                <span className="text-sm font-medium">Events</span>
+              </div>
+              <div className="flex items-center gap-2 text-[var(--galaxy)]">
+                <Users size={18} />
+                <span className="text-sm font-medium">Clubs</span>
+              </div>
+              <div className="flex items-center gap-2 text-[var(--galaxy)]">
+                <Sparkles size={18} />
+                <span className="text-sm font-medium">Opportunities</span>
+              </div>
+            </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-[var(--galaxy)]">
-            <Users size={18} />
-            <span className="text-sm font-medium">Clubs</span>
+
+          {/* Right Content - Dashboard Image */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="relative max-w-md w-full">
+              {/* Background Decorative Elements */}
+              <div className="absolute -top-4 -right-4 w-32 h-32 bg-gradient-to-br from-[var(--venus)] to-[var(--sky)] rounded-3xl blur-2xl"></div>
+              <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-gradient-to-br from-[var(--planetary)]/20 to-[var(--sapphire)]/20 rounded-3xl blur-2xl"></div>
+              
+              {/* Dashboard Image Container */}
+              <div className="relative z-10 rounded-3xl p-6">
+                <img 
+                  src="/dashboard.png" 
+                  alt="Xplore Dashboard Preview" 
+                  className="w-full h-full scale-140 md:scale-180 rounded-2xl"
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-[var(--galaxy)]">
-            <Sparkles size={18} />
-            <span className="text-sm font-medium">Opportunities</span>
-          </div>
-        </div>
         </div>
       </main>
 
