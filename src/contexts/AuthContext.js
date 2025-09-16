@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       // Verify token with backend - Fixed port to 5000
-      fetch('http://localhost:8000/api/auth/me', {
+      fetch('http://localhost:5000/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      // Fixed port to 8000
+      // Fixed port to 5000
       const response = await fetch('http://localhost:8000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -68,6 +68,31 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (userData) => {
+    try {
+      // Fixed port to 5000
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem('token', data.token);
+        setUser(data.user);
+        return { success: true, user: data.user };
+      } else {
+        return { success: false, message: data.message || 'Registration failed', errors: data.errors };
+      }
+    } catch (error) {
+      return { success: false, message: 'Network error. Please try again.' };
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
@@ -76,6 +101,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     login,
+    register,
     logout,
     loading
   };
