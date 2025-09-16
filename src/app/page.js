@@ -72,9 +72,9 @@ export default function Home() {
       
       {/* Header (original content) */}
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 py-4 pt-5">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-[var(--planetary)] text-white font-extrabold grid place-items-center">X</div>
-          <span className="font-extrabold tracking-wide text-[var(--galaxy)]">PLORE</span>
+        <div className="flex items-center gap-0">
+          <img src="/favicon.png" alt="Xplore Logo" className="h-15 w-15 rounded-full object-cover" />
+          <span className="font-extrabold tracking-wide text-[var(--galaxy)] text-[17px] -ml-4">PLORE</span>
         </div>
         <div className="flex items-center gap-4">
           <Button

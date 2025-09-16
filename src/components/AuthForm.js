@@ -2,10 +2,18 @@
 import { useState } from 'react';
 import Button from './Button';
 import InputField from './InputField';
-import { X } from 'lucide-react';
+import { X, Eye, EyeOff } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function AuthForm({ onClose }) {
+  const { login } = useAuth();
+  const router = useRouter();
   const [userType, setUserType] = useState('student');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -15,7 +23,6 @@ export default function AuthForm({ onClose }) {
     confirmPassword: '',
     clubName: '',
     rememberMe: false,
-    agreeTerms: false
   });
 
   const handleInputChange = (field, value) => {
@@ -23,12 +30,45 @@ export default function AuthForm({ onClose }) {
       ...prev,
       [field]: value
     }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', { userType, formData });
-    // Handle authentication logic here
+    setLoading(true);
+    setErrors({});
+
+    try {
+      let result;
+      
+      // Login logic
+      const loginData = userType === 'student' 
+        ? { rollNumber: formData.rollNumber, password: formData.password }
+        : { clubName: formData.clubName, password: formData.adminPassword };
+      
+      result = await login(loginData);
+
+      if (result.success) {
+        onClose();
+        router.push('/dashboard');
+      } else {
+        if (result.errors) {
+          setErrors(result.errors);
+        } else {
+          setErrors({ general: result.message });
+        }
+      }
+    } catch (error) {
+      setErrors({ general: 'Something went wrong. Please try again.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -74,6 +114,13 @@ export default function AuthForm({ onClose }) {
             </button>
           </div>
 
+          {/* Error Message */}
+          {errors.general && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-600 text-sm">{errors.general}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
 
             {userType === 'clubAdmin' && (
@@ -88,6 +135,9 @@ export default function AuthForm({ onClose }) {
                   placeholder="Enter your club name"
                   required
                 />
+                {errors.clubName && (
+                  <p className="text-red-600 text-xs mt-1 px-1">{errors.clubName}</p>
+                )}
               </div>
             )}
 
@@ -102,20 +152,35 @@ export default function AuthForm({ onClose }) {
                   placeholder="Roll Number"
                   required
                 />
-              </div>
+                {errors.rollNumber && (
+                  <p className="text-red-600 text-xs mt-1 px-1">{errors.rollNumber}</p>
+                )}
+            </div>
 
             {/* Password field */}
             <div>
               <label className="block text-sm font-medium text-[var(--galaxy)] mb-1 px-1">
                   Password
               </label>
+              <div className='relative'>
               <InputField
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={formData.password}
                 onChange={(e) => handleInputChange('password', e.target.value)}
                 placeholder='Password'
                 required
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+              </div>
+              {errors.password && (
+                <p className="text-red-600 text-xs mt-1 px-1">{errors.password}</p>
+              )}
             </div>
 
             {/* Remember Me */}
@@ -140,9 +205,10 @@ export default function AuthForm({ onClose }) {
             {/* Submit Button */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-[var(--galaxy)]/90 text-[15px] text-white py-3 cursor-pointer mt-4 md:mt-6 rounded-xl tracking-wide"
             >
-              Login
+              {loading ? 'Logging in...' : 'Login'}
             </button>
 
           </form>
