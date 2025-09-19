@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import StudentLayout from '../../components-student/StudentLayout';
 import { 
   MessageSquare, 
   Star, 
@@ -12,6 +11,7 @@ import {
   Hash, 
   RefreshCw
 } from 'lucide-react';
+import ClubAdminLayout from '../../components-club-admin/ClubAdminLayout';
 
 export default function FeedbackPage() {
   const [formData, setFormData] = useState({
@@ -99,7 +99,7 @@ export default function FeedbackPage() {
 
   if (isSubmitted) {
     return (
-      <StudentLayout>
+      <ClubAdminLayout>
         <div className="flex items-center justify-center min-h-[50vh]">
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center max-w-sm">
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -109,19 +109,13 @@ export default function FeedbackPage() {
             <p className="text-[var(--planetary)] text-sm">Your response has been recorded.</p>
           </div>
         </div>
-      </StudentLayout>
+      </ClubAdminLayout>
     );
   }
 
   return (
-    <StudentLayout>
+    <ClubAdminLayout>
       <div className="space-y-6">
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-[var(--galaxy)]">Feedback</h1>
-          <p className="text-[var(--planetary)] text-sm mt-1">Share your experience with us</p>
-        </div>
-
         {/* Main Form - Compact */}
         <div className="max-w-2xl mx-auto">
           <div className="bg-white rounded-3xl border border-gray-100 shadow-sm">
@@ -302,6 +296,6 @@ export default function FeedbackPage() {
           </div>
         </div>
       </div>
-    </StudentLayout>
+    </ClubAdminLayout>
   );
 }
