@@ -50,8 +50,8 @@ export default function AuthForm({ onClose }) {
       // Login logic
       const loginData = userType === 'student' 
         ? { rollNumber: formData.rollNumber, password: formData.password }
-        : { clubName: formData.clubName, password: formData.adminPassword };
-      
+        : { clubName: formData.clubName, password: formData.password };
+      console.log('Sending login data:', loginData);
       result = await login(loginData);
 
       if (result.success) {
