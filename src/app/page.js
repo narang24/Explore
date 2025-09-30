@@ -365,7 +365,7 @@ export default function Home() {
                   <h4 className="font-semibold text-white mb-2 text-sm">MENU</h4>
                   <ul className="space-y-1.5 text-white/70 text-sm">
                     <li className="hover:text-white cursor-pointer transition-colors">Home</li>
-                    <li className="hover:text-white cursor-pointer transition-colors">About</li>
+                    <li className="hover:text-white cursor-pointer transition-colors"><a href='/about'>About</a></li>
                     <li className="hover:text-white cursor-pointer transition-colors">Contact Us</li>
                   </ul>
                 </div>
