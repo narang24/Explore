@@ -4,8 +4,13 @@ import { Award, BarChart3, FileCheck, Users, CheckCircle2, Sparkles, TrendingUp,
 import AuthForm from '../components/AuthForm';
 import Button from '../components/Button';
 
+import { useModal } from '../contexts/ModalContext';
+import ComingSoonModal from '../components/ComingSoonModal';
+import Placeholder from '../components/Placeholder';
+
 export default function Home() {
   const [openModal, setOpenModal] = useState(false);
+  const { triggerModal } = useModal();
 
   const features = [
     { 
@@ -113,6 +118,13 @@ export default function Home() {
             className="text-xs border border-[var(--planetary)] text-[var(--planetary)] cursor-pointer hover:bg-[var(--planetary)] hover:text-white px-2 py-2 min-w-24 transition-colors duration-300 bg-transparent"
           >
             Login
+          </Button>
+           <Button
+            radius="md"
+            onClick={() => triggerModal("This feature is coming soon 🚧")}
+            className="text-xs border border-gray-400 text-gray-700 cursor-pointer hover:bg-gray-200 px-2 py-2 min-w-24 transition-colors duration-300 bg-transparent"
+          >
+            Try Feature
           </Button>
         </div>
       </header>
@@ -400,11 +412,153 @@ export default function Home() {
         </div>
       </footer>
 
-      {openModal && (
+      {/* {openModal && (
         <AuthForm
           onClose={() => setOpenModal(false)}
         />
-      )}
-    </div>
+      )} */}
+
+       {openModal && <AuthForm onClose={() => setOpenAuth(false)} />}
+      <ComingSoonModal />
+    {/* </div>  */}
+
+    {Placeholder && <Placeholder title="Feature Coming Soon" message="🚧 Stay tuned!" />}
+<Button onClick={() => setShowPlaceholder(true)}>Try Feature</Button>
+  
+    </div> 
   );
 }
+
+
+
+
+
+// 'use client';
+// import { useState, useRef, useEffect } from 'react';
+// import { Award, BarChart3, FileCheck, Users, CheckCircle2, Sparkles, Shield } from 'lucide-react';
+// import AuthForm from '../components/AuthForm';
+// import Button from '../components/Button';
+
+// // --- IMPORT YOUR FALLBACK FEATURE ---
+// import { useModal } from '../contexts/ModalContext';
+// import ComingSoonModal from '../components/ComingSoonModal';
+// import Placeholder from '../components/Placeholder';
+
+// export default function Home() {
+//   const [openAuthModal, setOpenAuthModal] = useState(false);
+
+//   // --- MODAL CONTEXT FOR FALLBACK FEATURE ---
+//   const { openModal } = useModal();
+
+//   const features = [
+//     { 
+//       title: 'Track Your Journey', 
+//       desc: 'Monitor achievements, build portfolios, and showcase your academic excellence with automated tracking.',
+//       image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=crop',
+//       tag: 'Students'
+//     },
+//     // ... keep all other feature objects
+//   ];
+
+//   const storiesRef = useRef(null);
+//   const [activeStory, setActiveStory] = useState(0);
+
+//   useEffect(() => {
+//     const el = storiesRef.current;
+//     if (!el) return;
+//     const updateActive = () => {
+//       const cards = Array.from(el.querySelectorAll('article'));
+//       const wrap = el.getBoundingClientRect();
+//       const wrapCenter = wrap.left + wrap.width / 2;
+//       let idx = 0;
+//       let min = Number.POSITIVE_INFINITY;
+//       cards.forEach((c, i) => {
+//         const r = c.getBoundingClientRect();
+//         const cardCenter = r.left + r.width / 2;
+//         const d = Math.abs(cardCenter - wrapCenter);
+//         if (d < min) { min = d; idx = i; }
+//       });
+//       setActiveStory(idx);
+//     };
+//     updateActive();
+//     el.addEventListener('scroll', updateActive, { passive: true });
+//     window.addEventListener('resize', updateActive);
+//     return () => {
+//       el.removeEventListener('scroll', updateActive);
+//       window.removeEventListener('resize', updateActive);
+//     };
+//   }, []);
+
+//   const goTo = (i) => {
+//     const el = storiesRef.current;
+//     if (!el) return;
+//     const cards = el.querySelectorAll('article');
+//     const card = cards[i];
+//     if (card) {
+//       el.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-white text-[var(--galaxy)] flex flex-col">
+//       {/* HEADER */}
+//       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 py-4 pt-5">
+//         <div className="flex items-center gap-0">
+//           <img src="/favicon.png" alt="Xplore Logo" className="h-15 w-15 rounded-full object-cover" />
+//           <span className="font-extrabold tracking-wide text-[var(--galaxy)] text-[17px] -ml-4">PLORE</span>
+//         </div>
+//         <div className="flex items-center gap-4">
+//           <Button
+//             radius="md"
+//             onClick={() => setOpenAuthModal(true)}
+//             className="text-xs border border-[var(--planetary)] text-[var(--planetary)] cursor-pointer hover:bg-[var(--planetary)] hover:text-white px-2 py-2 min-w-24 transition-colors duration-300 bg-transparent"
+//           >
+//             Login
+//           </Button>
+//         </div>
+//       </header>
+
+//       {/* HERO SECTION */}
+//       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 md:pt-24 pb-28">
+//         <div className="grid lg:grid-cols-2 gap-14 lg:gap-16 items-center">
+//           {/* LEFT CONTENT */}
+//           <div className="text-center lg:text-left">
+//             <h1 className="max-w-3xl text-4xl md:text-5xl font-semibold text-[var(--galaxy)]">
+//               Complete Campus Management Solution
+//             </h1>
+//             <p className="mt-3 max-w-2xl text-sm md:text-base text-[var(--planetary)]">
+//               Empowering students to track achievements and enabling faculty to manage, approve, and analyze campus activities effortlessly.
+//             </p>
+
+//             {/* --- PLACEHOLDER BUTTON (FALLBACK FEATURE) --- */}
+//             <div className="mt-6">
+//               <Placeholder onClick={openModal}>Coming Soon Feature</Placeholder>
+//             </div>
+
+//           </div>
+
+//           {/* RIGHT CONTENT */}
+//           <div className="relative flex justify-center lg:justify-end">
+//             <div className="relative max-w-md w-full">
+//               <div className="absolute -top-4 -right-4 w-32 h-32 bg-gradient-to-br from-[var(--venus)] to-[var(--sky)] rounded-3xl blur-2xl"></div>
+//               <div className="absolute -bottom-8 -left-8 w-28 h-28 bg-gradient-to-br from-[var(--planetary)]/20 to-[var(--sapphire)]/20 rounded-3xl blur-2xl"></div>
+//               <div className="relative z-10 rounded-3xl p-6">
+//                 <img 
+//                   src="/dashboard.png" 
+//                   alt="Xplore Dashboard Preview" 
+//                   className="w-full h-full scale-140 md:scale-180 rounded-2xl"
+//                 />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </main>
+
+//       {/* --- AUTH FORM MODAL --- */}
+//       {openAuthModal && <AuthForm onClose={() => setOpenAuthModal(false)} />}
+
+//       {/* --- FALLBACK MODAL --- */}
+//       <ComingSoonModal />
+//     </div>
+//   );
+// }
