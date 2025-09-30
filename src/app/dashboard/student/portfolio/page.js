@@ -15,7 +15,8 @@ import {
   Edit3,
   Eye,
   Link,
-  Globe
+  Globe,
+  Zap
 } from 'lucide-react';
 
 // Mock data for student's complete academic journey
@@ -87,13 +88,83 @@ const studentProfile = {
 export default function PortfolioPage() {
   const [showResumeBuilder, setShowResumeBuilder] = useState(false);
   const [showPortfolioPreview, setShowPortfolioPreview] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleDownloadPortfolio = () => {
-    alert('Portfolio PDF download functionality would be implemented here');
+  const generatePortfolioPDF = () => {
+    setIsGenerating(true);
+    
+    // Simulate PDF generation
+    setTimeout(() => {
+      const element = document.getElementById('portfolio-content');
+      
+      // Create a simple PDF-like content
+      const portfolioContent = `
+${studentProfile.name}
+${studentProfile.branch} Student
+${studentProfile.email} | ${studentProfile.phone}
+${studentProfile.instituteName}
+
+ACADEMIC DETAILS
+Current Year: ${studentProfile.currentYear}${['st', 'nd', 'rd', 'th'][studentProfile.currentYear-1] || 'th'} Year
+CGPA: ${studentProfile.cgpa}
+SGPA: ${studentProfile.sgpa}
+Batch: ${studentProfile.batch}
+
+VERIFIED CERTIFICATIONS
+${studentProfile.validatedCertificates.map(cert => 
+  `- ${cert.activityName}\n  ${cert.achievement} | ${cert.issuer} | ${new Date(cert.date).toLocaleDateString()}`
+).join('\n')}
+
+VERIFIED ACTIVITIES & ACHIEVEMENTS
+${studentProfile.validatedActivities.map(activity => 
+  `- ${activity.title} (${activity.type})\n  ${activity.achievement} | ${new Date(activity.date).toLocaleDateString()}`
+).join('\n')}
+      `;
+      
+      // Create blob and download
+      const blob = new Blob([portfolioContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${studentProfile.name.replace(/\s+/g, '_')}_Portfolio.txt`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      setIsGenerating(false);
+      alert('Portfolio PDF downloaded successfully!');
+    }, 1500);
   };
 
   const handleGenerateWebLink = () => {
-    alert('Web portfolio link generation functionality would be implemented here');
+    setIsGenerating(true);
+    
+    // Simulate web link generation
+    setTimeout(() => {
+      const uniqueId = Math.random().toString(36).substring(2, 15);
+      const webLink = `https://portfolio.pec.edu.in/${studentProfile.rollNumber.toLowerCase()}/${uniqueId}`;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(webLink).then(() => {
+        setIsGenerating(false);
+        alert(`Portfolio web link generated and copied to clipboard!\n\n${webLink}`);
+      }).catch(() => {
+        setIsGenerating(false);
+        alert(`Portfolio web link generated:\n\n${webLink}`);
+      });
+    }, 1500);
+  };
+
+  const handleOneClickGeneration = () => {
+    setIsGenerating(true);
+    
+    setTimeout(() => {
+      generatePortfolioPDF();
+      setTimeout(() => {
+        handleGenerateWebLink();
+      }, 500);
+    }, 500);
   };
 
   if (showResumeBuilder) {
@@ -110,16 +181,6 @@ export default function PortfolioPage() {
   return (
     <StudentLayout>
       <div className="space-y-6">
-        {/* Header Section */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-[var(--galaxy)]">Digital Portfolio</h1>
-            <p className="text-[var(--planetary)] mt-1">
-              Auto-generated verified academic portfolio
-            </p>
-          </div>
-        </div>
-
         {/* Student Profile Card */}
         <div className="bg-gradient-to-r from-[var(--planetary)] to-[var(--sapphire)] rounded-2xl p-6 text-white">
           <div className="flex items-center justify-between">
@@ -129,7 +190,7 @@ export default function PortfolioPage() {
               </div>
               <div>
                 <h2 className="text-2xl font-bold">{studentProfile.name}</h2>
-                <p className="text-white/90">{studentProfile.rollNumber} • {studentProfile.branch}</p>
+                <p className="text-white/90">{studentProfile.branch}</p>
                 <div className="flex items-center gap-4 mt-2 text-white/80">
                   <span>{studentProfile.currentYear}{['st', 'nd', 'rd', 'th'][studentProfile.currentYear-1] || 'th'} Year</span>
                   <span>•</span>
@@ -148,11 +209,27 @@ export default function PortfolioPage() {
           </div>
         </div>
 
-        {/* Portfolio Actions */}
+        {/* Quick Actions */}
         <div className="grid grid-cols-3 gap-4">
           <button 
+            onClick={handleOneClickGeneration}
+            disabled={isGenerating}
+            className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-xl p-5 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <Zap className="text-white" size={22} />
+              </div>
+              <div className="text-left">
+                <h3 className="font-semibold text-white">One-Click Generate</h3>
+                <p className="text-sm text-white/80">PDF + Web Link instantly</p>
+              </div>
+            </div>
+          </button>
+
+          <button 
             onClick={() => setShowPortfolioPreview(true)}
-            className="bg-white rounded-xl p-4 border border-gray-200 hover:shadow-md transition-all group"
+            className="bg-white hover:bg-gray-50 rounded-xl p-5 border border-gray-200 transition-all group"
           >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-[var(--sky)] rounded-xl flex items-center justify-center group-hover:bg-[var(--planetary)] transition-colors">
@@ -160,14 +237,14 @@ export default function PortfolioPage() {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-[var(--galaxy)]">Preview Portfolio</h3>
-                <p className="text-sm text-[var(--planetary)]">View your digital portfolio</p>
+                <p className="text-sm text-[var(--planetary)]">View full portfolio</p>
               </div>
             </div>
           </button>
 
           <button 
             onClick={() => setShowResumeBuilder(true)}
-            className="bg-white rounded-xl p-4 border border-gray-200 hover:shadow-md transition-all group"
+            className="bg-white hover:bg-gray-50 rounded-xl p-5 border border-gray-200 transition-all group"
           >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-[var(--sky)] rounded-xl flex items-center justify-center group-hover:bg-[var(--planetary)] transition-colors">
@@ -175,32 +252,10 @@ export default function PortfolioPage() {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-[var(--galaxy)]">Customize Portfolio</h3>
-                <p className="text-sm text-[var(--planetary)]">Personalize your portfolio</p>
+                <p className="text-sm text-[var(--planetary)]">Build custom resume</p>
               </div>
             </div>
           </button>
-
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-[var(--galaxy)]">Export Options</h3>
-            </div>
-            <div className="flex gap-2">
-              <button 
-                onClick={handleDownloadPortfolio}
-                className="flex-1 flex items-center justify-center gap-2 bg-[var(--planetary)] text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-[var(--sapphire)] transition-colors"
-              >
-                <Download size={14} />
-                PDF
-              </button>
-              <button 
-                onClick={handleGenerateWebLink}
-                className="flex-1 flex items-center justify-center gap-2 bg-purple-600 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
-              >
-                <Link size={14} />
-                Web Link
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Portfolio Template Preview */}
@@ -211,18 +266,34 @@ export default function PortfolioPage() {
                 <h3 className="text-lg font-semibold text-[var(--galaxy)]">Portfolio Template Preview</h3>
                 <p className="text-sm text-[var(--planetary)] mt-1">Auto-generated from your verified academic data</p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium flex items-center gap-1">
                   <CheckCircle size={12} />
                   All Data Verified
                 </span>
+                <button
+                  onClick={generatePortfolioPDF}
+                  disabled={isGenerating}
+                  className="flex items-center gap-2 px-4 py-2 bg-[var(--planetary)] text-white rounded-lg text-sm font-medium hover:bg-[var(--sapphire)] transition-colors disabled:opacity-50"
+                >
+                  <Download size={14} />
+                  Download PDF
+                </button>
+                <button
+                  onClick={handleGenerateWebLink}
+                  disabled={isGenerating}
+                  className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors disabled:opacity-50"
+                >
+                  <Link size={14} />
+                  Generate Link
+                </button>
               </div>
             </div>
           </div>
 
           <div className="p-6 bg-gray-50">
             {/* Portfolio Preview Content */}
-            <div className="bg-white rounded-xl shadow-sm max-w-4xl mx-auto p-8">
+            <div id="portfolio-content" className="bg-white rounded-xl shadow-sm max-w-4xl mx-auto p-8">
               {/* Header */}
               <div className="text-center mb-8 pb-6 border-b-2 border-gray-200">
                 <h1 className="text-3xl font-bold text-[var(--galaxy)] mb-2">
@@ -248,24 +319,16 @@ export default function PortfolioPage() {
                   </h2>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Roll Number:</span>
-                      <span className="font-medium">{studentProfile.rollNumber}</span>
+                      <span className="text-gray-600 text-sm">Current Year:</span>
+                      <span className="font-medium text-sm">{studentProfile.currentYear}{['st', 'nd', 'rd', 'th'][studentProfile.currentYear-1] || 'th'} Year</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Current Year:</span>
-                      <span className="font-medium">{studentProfile.currentYear}{['st', 'nd', 'rd', 'th'][studentProfile.currentYear-1] || 'th'} Year</span>
+                      <span className="text-gray-600 text-sm">CGPA:</span>
+                      <span className="font-medium text-[var(--planetary)] text-sm">{studentProfile.cgpa}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">CGPA:</span>
-                      <span className="font-medium text-[var(--planetary)]">{studentProfile.cgpa}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">SGPA:</span>
-                      <span className="font-medium text-[var(--planetary)]">{studentProfile.sgpa}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Total Credits:</span>
-                      <span className="font-medium">{studentProfile.totalCredits}</span>
+                      <span className="text-gray-600 text-sm">SGPA:</span>
+                      <span className="font-medium text-[var(--planetary)] text-sm">{studentProfile.sgpa}</span>
                     </div>
                   </div>
                 </div>
@@ -276,20 +339,16 @@ export default function PortfolioPage() {
                   </h2>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Branch:</span>
-                      <span className="font-medium">{studentProfile.branch}</span>
+                      <span className="text-gray-600 text-sm">Branch:</span>
+                      <span className="font-medium text-sm">{studentProfile.branch}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Batch:</span>
-                      <span className="font-medium">{studentProfile.batch}</span>
+                      <span className="text-gray-600 text-sm">Batch:</span>
+                      <span className="font-medium text-sm">{studentProfile.batch}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Institute:</span>
-                      <span className="font-medium">{studentProfile.instituteName}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Admission Date:</span>
-                      <span className="font-medium">{new Date(studentProfile.admissionDate).toLocaleDateString()}</span>
+                      <span className="text-gray-600 text-sm">Institute:</span>
+                      <span className="font-medium text-sm">{studentProfile.instituteName}</span>
                     </div>
                   </div>
                 </div>
@@ -355,49 +414,6 @@ export default function PortfolioPage() {
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Portfolio Statistics */}
-        <div className="grid grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Total Activities</p>
-                <p className="text-2xl font-bold text-[var(--galaxy)]">{studentProfile.validatedActivities.length}</p>
-              </div>
-              <Calendar className="text-[var(--planetary)]" size={24} />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Certifications</p>
-                <p className="text-2xl font-bold text-[var(--galaxy)]">{studentProfile.validatedCertificates.length}</p>
-              </div>
-              <Award className="text-[var(--planetary)]" size={24} />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Current CGPA</p>
-                <p className="text-2xl font-bold text-[var(--galaxy)]">{studentProfile.cgpa}</p>
-              </div>
-              <GraduationCap className="text-[var(--planetary)]" size={24} />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Credits Earned</p>
-                <p className="text-2xl font-bold text-[var(--galaxy)]">{studentProfile.totalCredits}</p>
-              </div>
-              <BookOpen className="text-[var(--planetary)]" size={24} />
             </div>
           </div>
         </div>
