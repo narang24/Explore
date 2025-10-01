@@ -529,7 +529,7 @@ export default function PortfolioPage() {
               
               <div className="text-center py-8">
                 <Eye className="mx-auto mb-3 text-gray-400" size={32} />
-                <h3 className="text-lg font-semibold text-[var(--galaxy)] mb-2">Click "Preview Portfolio" to see full details</h3>
+                <h3 className="text-lg font-semibold text-[var(--galaxy)] mb-2">Click Preview Portfolio to see full details</h3>
                 <p className="text-sm text-[var(--planetary)] mb-4">View your complete academic profile including certifications and activities</p>
                 <button
                   onClick={() => setShowPortfolioPreview(true)}
